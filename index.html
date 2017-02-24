@@ -2,15 +2,75 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width-device-width"> <!-- do @media  w css-->
 	<title>Document</title>
-	<link rel="stylesheet" href="bower_components/bootstrap/less/bootstrap.less">
+	<link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap.min.css">
 </head>
-<body>
-	<h1 class="panel">Zrob sie czerwony</h1>
+<body ng-app="">
+	<header></header>
+	<div class="container"> <!-- lub <main> -->
+		<section class="col-lg-6 col-md-6 col-sm-6 col-xs-12">Sekcja 1 
+			<input type="text" ng-model="name">
+			{{name}}
+			<article>Jak pogrubić ważniejsze <span class="marketing-bold">słowo</span>? Najlepiej span</article>	
+
+		</section>
+		<section class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="panel2"> Sekcja 2
+		
+		<button id="btn2">Guzik</button>
+
+		<article>
+			<button  data-panelId="1" class="panel-button">guzink 1</button>
+			<button  data-panelId="2" class="panel-button">guzik 2</button>
+			<button  data-panelId="3" class="panel-button">guzik 3</button>
+			<article data-panelId="1">Artykuł 1</article>
+			<article data-panelId="2">Artykuł 2</article>
+			<article data-panelId="3">Artykuł 3</article>
+
+		</article>
+		</section>
+	</div>
+	<footer></footer>
 	
 	<script src="bower_components/jquery/dist/jquery.js"></script>
+	<script src="bower_components/angular/angular.js"></script>
 	<script>
-		$("h1").css("color","red");
+		$(document).ready(function(){ // po zaladowaniu salej strony
+
+			$(".marketing-bold").css({fontWeight: 'bold'});
+
+			$("#btn2").on("click", function(){
+
+				$("#panel2").slideToggle(1000).slideToggle(1000).css({
+					color:'green', 
+					fontFamily: 'Times New Roman', 
+					opacity: 0.5
+				});
+
+			});
+
+			$("#btn2").on("mouseover", function(){
+
+				$(this).html("Naciśnij").css(
+					{
+						backgroundColor:'pink',
+						color:'red'
+					});				
+			});
+
+
+
+			$(".panel-button").on("click", function(){
+				$(this).css("color","red");
+				var fullButtonId = $(this).attr('data-panelId');
+				$("#" + fullButtonId).css('color','pink');
+
+				$("article[data-panelId = "+fullButtonId+" ]").toggle();
+				$("article[data-panelId = "+fullButtonId+" ]").html("nowa wiadomość");
+				
+			});
+		});
 	</script>
 </body>
 </html>
+
